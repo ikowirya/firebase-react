@@ -101,20 +101,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 24,
-    justifyContent: "top",
   },
   input: {
     marginHorizontal: 10,
     padding: 20,
     marginVertical: 10,
     borderWidth: 1,
+    borderRadius: 10
   },
   login: {
     padding: 10,
     marginHorizontal: 10,
     backgroundColor: "orange",
     alignItems: "center",
-    borderRadius: 10,
+    borderRadius:10,
   },
   register: {
     padding: 10,
