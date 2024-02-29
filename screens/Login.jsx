@@ -24,6 +24,8 @@ const Login = ({ navigation }) => {
   const [validPassword, setValidPassword] = useState(true);
   const [validUsername, setValidUsername] = useState(true);
   const auth = FIREBASE_AUTH;
+
+  {/* function check token */}
   useEffect(() => {
     AsyncStorage.getItem("token").then((token) => {
       if (token !== null) {
@@ -32,12 +34,14 @@ const Login = ({ navigation }) => {
     });
   }, []);
 
+  {/* function validate email */}
   const handleEmail = (input) => {
     setUsername(input);
     const data = isValidEmail(input);
     data ? setValidUsername(true) : setValidUsername(false);
   };
 
+  {/* function validate password */}
   const handlePassword = (input) => {
     setPassword(input);
     const data = isValidPassword(input);
@@ -74,6 +78,7 @@ const Login = ({ navigation }) => {
         value={username}
         onChangeText={(text) => handleEmail(text)}
       />
+      {/* Message validate */}
       {!validUsername && <Text style={styles.validation}>Email not valid</Text>}
       <TextInput
         style={styles.input}
@@ -82,6 +87,7 @@ const Login = ({ navigation }) => {
         onChangeText={(text) => handlePassword(text)}
         secureTextEntry
       />
+      {/* Message validate */}
       {!validPassword && (
         <Text style={styles.validation}>Password not valid</Text>
       )}

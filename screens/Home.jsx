@@ -1,27 +1,30 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
 import { View, StyleSheet, Text, Button, FlatList, Image } from "react-native";
-import { BASE_URL } from "../utils/Constants";
+import { BASE_URL, REJECT_AUTH } from "../utils/Constants";
 
 const Home = ({ navigation }) => {
   const [anime, setAnime] = useState([]);
   
+  {/* function logout */}
   const handleLogout = () => {
     AsyncStorage.removeItem("token").then(() => navigation.navigate("login"));
   };
 
+  {/* function check token */}
   useEffect(() => {
     AsyncStorage.getItem("token")
       .then((token) => {
         if (token !== null) {
           return fetch(`${BASE_URL}`);
         }
-        return Promise.reject("Not Authorize!");
+        return Promise.reject(`${REJECT_AUTH}`);
       })
       .then((response) => response.json())
       .then(({ data }) => setAnime(data));
   }, []);
 
+  {/* UI item list */}
   const renderAnime = ({ item }) => (
     <View style={styles.sectionList}>
       <Image

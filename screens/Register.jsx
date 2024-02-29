@@ -15,7 +15,6 @@ import {
   INPUT_PASSWORD,
   INPUT_USERNAME,
 } from "../utils/Constants";
-import { isValidPassword } from "../utils/Validation";
 
 const Register = ({ navigation }) => {
   const [username, setUsername] = useState();
@@ -28,12 +27,6 @@ const Register = ({ navigation }) => {
       }
     });
   }, []);
-
-  const handlePassword = (input) => {
-    setPassword(input)
-    const data = isValidPassword(input)
-    data ? setValid(true): setValid(false)
-  };
 
   const handleRegister = () => {
     createUserWithEmailAndPassword(auth, username, password)
@@ -65,7 +58,7 @@ const Register = ({ navigation }) => {
         style={styles.input}
         placeholder={INPUT_PASSWORD}
         value={password}
-        onChangeText={(text) => handlePassword(text)}
+        onChangeText={setPassword}
         secureTextEntry
       />
 
