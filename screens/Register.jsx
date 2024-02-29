@@ -68,9 +68,6 @@ const Register = ({ navigation }) => {
         onChangeText={(text) => handlePassword(text)}
         secureTextEntry
       />
-       {!isValid && (
-        <Text style={styles.validation} >Password not valid</Text>
-      )}
 
       <TouchableOpacity style={styles.register} onPress={handleRegister}>
         <Text>Register</Text>
