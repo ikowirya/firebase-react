@@ -9,7 +9,7 @@ const Home = ({ navigation }) => {
   const [anime, setAnime] = useState([]);
   const count = useSelector((state) => state.counter.count);
   const dispatch = useDispatch();
-  
+
   /* function logout */
   const handleLogout = () => {
     AsyncStorage.removeItem("token").then(() => navigation.navigate("login"));
@@ -31,7 +31,7 @@ const Home = ({ navigation }) => {
   }, []);
   */
   /* function check token */
-  
+
   /* UI item list */
   /* const renderAnime = ({ item }) => (
     <View style={styles.sectionList}>
@@ -41,14 +41,23 @@ const Home = ({ navigation }) => {
       <Text style={styles.title}>{item.title}</Text>
     </View>
   ); */
-   /* UI item list */
+  /* UI item list */
 
   return (
     <View style={styles.container}>
-      <Text>{count}</Text>
-      <Button title="Increment" onPress={()=> dispatch(counterActions.increment())}/>
-      <Button title="Decrement" onPress={()=> dispatch(counterActions.decrement())}/>
-      <Button title="Go to Detail" onPress={()=> navigation.navigate("detail")}/>
+      <Text style={styles.text}>Counter: {count}</Text>
+      <Button
+        title="Increment"
+        onPress={() => dispatch(counterActions.increment())}
+      />
+      <Button
+        title="Decrement"
+        onPress={() => dispatch(counterActions.decrement())}
+      />
+      <Button
+        title="Go to Detail"
+        onPress={() => navigation.navigate("detail")}
+      />
       <Button title="Logout" onPress={handleLogout} />
       {/* <FlatList data={anime} renderItem={renderAnime} /> */}
     </View>
@@ -57,7 +66,7 @@ const Home = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
+    flex: 1,
     marginTop: 45,
     justifyContent: "center",
     alignItems: "center",
@@ -72,6 +81,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingLeft: 10,
     marginBottom: 10,
+  },
+  text: {
+    fontSize: 45,
   },
 });
 export default Home;

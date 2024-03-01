@@ -80,8 +80,8 @@ const Register = ({ navigation }) => {
         onChangeText={(text) => handleEmail(text)}
       />
       {/* Message validate */}
-      {!validPassword && (
-        <Text style={styles.validation}>Password not valid</Text>
+      {!validUsername && (
+        <Text style={styles.validation}>Email not valid</Text>
       )}
       <TextInput
         style={styles.input}
