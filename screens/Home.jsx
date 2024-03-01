@@ -1,51 +1,49 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
-import { View, StyleSheet, Text, Button, FlatList, Image } from "react-native";
-import { BASE_URL, REJECT_AUTH } from "../utils/Constants";
+import {
+  View,
+  StyleSheet,
+  Text,
+  Button,
+  FlatList,
+  Image,
+  ActivityIndicator,
+  TouchableOpacity,
+} from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { counterActions } from "../reducers/counter";
+import { getTopAnime } from "../reducers/anime";
 
 const Home = ({ navigation }) => {
-  const [anime, setAnime] = useState([]);
   const count = useSelector((state) => state.counter.count);
+  const globalStyle = useSelector((state) => state.style.globalStyle);
+  const animeState = useSelector((state) => state.anime);
   const dispatch = useDispatch();
 
-  /* function logout */
   const handleLogout = () => {
     AsyncStorage.removeItem("token").then(() => navigation.navigate("login"));
   };
-  /* function logout */
 
-  /* function check token */
-  /*
   useEffect(() => {
-    AsyncStorage.getItem("token")
-      .then((token) => {
-        if (token !== null) {
-          return fetch(`${BASE_URL}`);
-        }
-        return Promise.reject(`${REJECT_AUTH}`);
-      })
-      .then((response) => response.json())
-      .then(({ data }) => setAnime(data));
-  }, []);
-  */
-  /* function check token */
+    dispatch(getTopAnime());
+  }, [dispatch]);
 
-  /* UI item list */
-  /* const renderAnime = ({ item }) => (
-    <View style={styles.sectionList}>
-      <Image
-        source={{ uri: item.images.jpg.image_url, width: 64, height: 64 }}
-      />
-      <Text style={styles.title}>{item.title}</Text>
-    </View>
-  ); */
-  /* UI item list */
+  const renderAnime = ({ item }) => (
+    <TouchableOpacity
+      onPress={() => navigation.navigate("detail", { id: item.mal_id })}
+    >
+      <View style={styles.sectionList}>
+        <Image
+          source={{ uri: item.images.jpg.image_url, width: 64, height: 64 }}
+        />
+        <Text style={styles.title}>{item.title}</Text>
+      </View>
+    </TouchableOpacity>
+  );
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Counter: {count}</Text>
+      {/* <Text style={globalStyle.text}>Counter: {count}</Text>
       <Button
         title="Increment"
         onPress={() => dispatch(counterActions.increment())}
@@ -57,19 +55,31 @@ const Home = ({ navigation }) => {
       <Button
         title="Go to Detail"
         onPress={() => navigation.navigate("detail")}
-      />
+      />*/}
       <Button title="Logout" onPress={handleLogout} />
-      {/* <FlatList data={anime} renderItem={renderAnime} /> */}
+      {animeState.loading ? (
+        <ActivityIndicator />
+      ) : (
+        // animeState.data?.map((item) => (
+        //   <View style={styles.sectionList} key={item.mal_id}>
+        //     <Image
+        //       source={{ uri: item.images.jpg.image_url, width: 64, height: 64 }}
+        //     />
+        //     <Text style={styles.title}>{item.title}</Text>
+        //   </View>
+        // ))
+        <FlatList
+          data={animeState && animeState.data}
+          renderItem={renderAnime}
+        />
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     marginTop: 45,
-    justifyContent: "center",
-    alignItems: "center",
   },
   title: {
     marginLeft: 10,
@@ -81,9 +91,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingLeft: 10,
     marginBottom: 10,
-  },
-  text: {
-    fontSize: 45,
   },
 });
 export default Home;

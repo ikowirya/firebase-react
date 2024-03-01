@@ -14,8 +14,8 @@ import {
   CREATED_SUCCESS,
   INPUT_PASSWORD,
   INPUT_USERNAME,
-} from "../utils/Constants";
-import { isValidEmail, isValidPassword } from "../utils/Validation";
+} from "../utils/constants";
+import { isValidEmail, isValidPassword } from "../utils/validation";
 
 const Register = ({ navigation }) => {
   const [username, setUsername] = useState();
